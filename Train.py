@@ -7,7 +7,7 @@ import neurolab as nl
 
 num_data = 50
 input_file_name = 'letter.data'
-labels_dictionary = 'onandig'
+labels_dictionary = 'onamdig'
 num_labels_dictionary = len(labels_dictionary)
 
 num_train = int(0.9 * num_data)
