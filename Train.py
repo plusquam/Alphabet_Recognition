@@ -6,7 +6,7 @@ import numpy as np
 import neurolab as nl
 
 num_data = 50
-input_file_name = 'letter.input_data'
+input_file_name = 'letter.data'
 labels_dictionary = 'onandig'
 num_labels_dictionary = len(labels_dictionary)
 
@@ -45,7 +45,7 @@ neural_network.trainf = nl.train.train_gd
 error_progress = neural_network.train(input_data[:num_train, :], labels[:num_train,:], epochs = 5000, show = 1000, goal= 0.01)
 
 # Saving neural network to the 'neural_network.input_data' file
-neural_network.save('neural_network.input_data')
+neural_network.save('neural_network.data')
 
 pred_test = neural_network.sim(input_data[num_train:, :])
 

@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{bdb80a99-3aac-4f78-b256-7d86ddb250e8}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>Train.py</StartupFile>
+    <StartupFile>Recognition.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

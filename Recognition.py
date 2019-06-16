@@ -6,7 +6,7 @@ import numpy as np
 import neurolab as nl
 
 num_data = 50
-input_file_name = 'letter.input_data'
+input_file_name = 'letter.data'
 labels_dictionary = 'onandig'
 num_labels_dictionary = len(labels_dictionary)
 
@@ -36,7 +36,7 @@ with open(input_file_name, 'r') as file:
 input_data = np.asfarray(input_data)
 labels = np.array(labels).reshape(num_data, num_labels_dictionary)
 
-neural_network = nl.load('neural_network.input_data')
+neural_network = nl.load('neural_network.data')
 
 pred_test = neural_network.sim(input_data[num_train:, :])
 
