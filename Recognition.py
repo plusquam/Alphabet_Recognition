@@ -14,7 +14,7 @@ read_from_file = False
 test_images_directory = 'test_data'
 converted_images_directory = 'test_data\\converted_images\\'
 
-num_data = 50
+num_data = 10000
 input_file_name = 'letter.data'
 output_log_file_name = 'test_results.txt'
 labels_dictionary = 'onamdig'
@@ -111,7 +111,6 @@ def read_and_convert_images():
     labels_list = []
     valid_filenames_list = []
     
-
     index = 0
     for image_name in input_images_name_list:
         # Getting label from file name
@@ -142,12 +141,15 @@ def read_and_convert_images():
                 cv2.imshow('tresholded_image', tresholded_image)
 
             #First stage of resizing
-            resized_image = cv2.resize(tresholded_image, dsize=(num_data_cols*10, num_data_rows*10), interpolation=cv2.INTER_CUBIC)
-            #ret, resized_image = cv2.threshold(resized_image, 210, 255, cv2.THRESH_BINARY)
-            if display_pre_images:
-                cv2.namedWindow('first_stage_resized_image', cv2.WINDOW_NORMAL)
-                cv2.imshow('first_stage_resized_image', resized_image)
-            print("Image " + str(index) + " first stage resize size: " + str(resized_image.shape))
+            if input_image.shape[0] > num_data_rows*10:
+                resized_image = cv2.resize(tresholded_image, dsize=(num_data_cols*10, num_data_rows*10), interpolation=cv2.INTER_CUBIC)
+                #ret, resized_image = cv2.threshold(resized_image, 210, 255, cv2.THRESH_BINARY)
+                if display_pre_images:
+                    cv2.namedWindow('first_stage_resized_image', cv2.WINDOW_NORMAL)
+                    cv2.imshow('first_stage_resized_image', resized_image)
+                print("Image " + str(index) + " first stage resize size: " + str(resized_image.shape))
+            else:
+                resized_image = tresholded_image
 
             # Resizing image to 16x8 size
             resized_image = cv2.resize(resized_image, dsize=(num_data_cols, num_data_rows), interpolation=cv2.INTER_CUBIC)
@@ -178,7 +180,7 @@ def read_and_convert_images():
     labels_list = np.array(labels_list)
 
     cv2.destroyAllWindows()
-    return output_images_data_list, labels_list, valid_filenames_list
+    return output_images_data_list, labels_list, valid_filenames_list, (num_input_images - len(valid_filenames_list))
 
 
 def save_test_log(filename, total, passed, unreaded):
@@ -210,11 +212,10 @@ test_num_unreaded = 0
 
 if read_from_file:
     input_data, labels, test_num_unreaded = read_data_from_file()
-    test_num_total = len(input_data) + test_num_unreaded
+    test_num_total = input_data.shape[0] + test_num_unreaded
 else:
-    input_data, labels, filenames = read_and_convert_images()
-    test_num_total = len(filenames)
-    test_num_unreaded = test_num_total - len(input_data)
+    input_data, labels, filenames, test_num_unreaded = read_and_convert_images()
+    test_num_total = len(filenames) + test_num_unreaded
 
 # Loading Neural Network
 neural_network = nl.load('neural_network.data')
@@ -271,7 +272,7 @@ for i in range(len(labels)):
     
         cv2.namedWindow('test_results', cv2.WINDOW_NORMAL)
         cv2.imshow('test_results',image)
-        cv2.waitKey(0)
+        cv2.waitKey(2000)
  
 # Saving logs from tests
 save_test_log(output_log_file_name, test_num_total, test_num_passed, test_num_unreaded)
