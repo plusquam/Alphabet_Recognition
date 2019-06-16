@@ -1,3 +1,6 @@
+# My ignores
+test_results.txt
+
 
 # Created by https://www.gitignore.io/api/data,opencv,python,visualstudio,visualstudiocode,openframeworks+visualstudio
 # Edit at https://www.gitignore.io/?templates=data,opencv,python,visualstudio,visualstudiocode,openframeworks+visualstudio
